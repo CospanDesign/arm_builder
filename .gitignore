@@ -2,8 +2,11 @@ clean_arm_builder.sh
 
 *.py[cod]
 
-# Scons
+# Any User Source Files
+src/*
+build
 
+# Scons
 .sconsign.dblite
 
 # VIM temporary files

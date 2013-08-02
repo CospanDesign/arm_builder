@@ -23,6 +23,7 @@ import os
 import sys
 import json
 import glob
+import subprocess
 
 PROJECT_BASE = os.path.abspath(
                     os.path.join(os.path.dirname(__file__), os.pardir))
@@ -58,7 +59,7 @@ def initialize_environment(env):
     config = read_config(env)
 
     #Read where the ARM Toolchain is located
-    build_path = config["tool_path"]
+    build_path = config["compiler_path"]
     #Read where the elf2img is located
     img2elf_path = config["img2elf_path"]
     #Read where the upload tool is located
@@ -90,6 +91,49 @@ def initialize_environment(env):
                     upload_tool = os.path.join(base, f)
 
     #print "Found: %s" % upload_tool
+    #Adjust the compiler prefix
+    compiler = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
+    env["CC"] = compiler
+
+def get_c_compiler_path(env):
+    config = read_config(env)
+    build_path = config["compiler_path"]
+    #Verify that the build tool actually cotains the correct tools
+    tool_base = ""
+    tool_prefix = ""
+    for base, dirs, files in os.walk(build_path):
+        for f in files:
+            if f.startswith("arm") and f.endswith("gcc"):
+                #print "Found: %s" % os.path.join(base, f)
+                tool_prefix = f.partition("gcc")[0]
+                tool_base = base
+                break
+
+    compiler_path = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
+    return compiler_path
+
+def get_compiler_version(env):
+    print "get compiler version"
+    compiler_path = get_c_compiler_path(env)
+    version = subprocess.check_output([compiler_path, "-dumpversion"])
+    return version
+
+def get_cxx_compiler_path(env):
+    config = read_config(env)
+    build_path = config["compiler_path"]
+    #Verify that the build tool actually cotains the correct tools
+    tool_base = ""
+    tool_prefix = ""
+    for base, dirs, files in os.walk(build_path):
+        for f in files:
+            if f.startswith("arm") and f.endswith("g++"):
+                #print "Found: %s" % os.path.join(base, f)
+                tool_prefix = f.partition("g++")[0]
+                tool_base = base
+                break
+
+    compiler_path = os.path.join(tool_base, "%s%s" % (tool_prefix, "g++"))
+    return compiler_path
 
 
 
@@ -98,9 +142,13 @@ def _resolve_paths(path_dict, file_types):
     Reads in a path dictionary and returns a list of source files
 
     Args:
-        (dictionary): a dictionary containing a relative or absolute reference 
-        to the source files that will be used in the build and, depending on the
-        modifier, will return a list of absolute paths for system to build
+        path_dict (dictionary): a dictionary containing a relative or absolute
+        reference to the source files that will be used in the build and,
+        depending on the modifier, will return a list of absolute paths for
+        system to build
+        file_types (list of extenstions): a list of file extensions to search
+        for
+        
 
     Returns
         (list of strings): A list of paths to be built
@@ -155,7 +203,57 @@ def _resolve_paths(path_dict, file_types):
     return paths
 
 
+def get_compiler_sources(env):
+    """
+    Returns a list of compiler sources
 
+    Args:
+        env (Scons.Envrionment): An environment to add all the tools too
+
+    Returns:
+        (list of paths): paths to be fed into the compiler
+
+    Raises:
+        Nothing
+    """
+    config = read_config(env)
+    return config["source"]
+
+def get_project_name(env):
+    """
+    Returns the name of the project that the scons will output
+
+    Args:
+        env (Scons.Environment): An environment to add all the tools too
+
+    Returns:
+        (string): name of the output (without an extension)
+
+    Raises:
+        Nothing
+    """
+    config = read_config(env)
+    return config["name"]
+
+def get_project_output_target(env):
+    """
+    Returns a path to the final build target output
+
+    Args:
+        env (Scons.Environment): An environment to add all the tools too
+
+    Returns:
+        (string): name of the output with the build path
+
+    Raises:
+        Nothing
+
+    """
+    config = read_config(env)
+    create_build_directory(config)
+    build_dir = get_build_directory(env, True)
+    target_name = config["name"]
+    return os.path.join(build_dir, target_name)
 
 def get_project_base():
     """
@@ -217,11 +315,11 @@ def read_config(env):
     include_paths = []
     library_paths = []
     if "source" in config.keys():
-        source_paths = _resolve_paths(config["source"], file_types = ["c", "cpp", "cxx", "c++"])
+        config["source"] = _resolve_paths(config["source"], file_types = ["c", "cpp", "cxx", "c++"])
     if "include" in config.keys():
-        include_paths = _resolve_paths(config["include"], file_types = ["h", "hxx", "hpp"])
+        config["include"] = _resolve_paths(config["include"], file_types = ["h", "hxx", "hpp"])
     if "libraries" in config.keys():
-        library_paths = _resolve_paths(config["libraries"], file_types = ["a", "o"])
+        config["libraries"] = _resolve_paths(config["libraries"], file_types = ["a", "o"])
 
 
     return config
@@ -249,11 +347,11 @@ def create_build_directory(config):
 
     return build_dir
 
-def get_build_directory(config, absolute = False):
+def get_build_directory(env, absolute = False):
     """Returns the project output directory location
 
     Args:
-        config (dictionary): configuration dictionary
+        env (Scons.Envrionment): An environment to add all the tools too
         absolute (boolean):
             False (default): Relative to project base
             True: Absolute
@@ -264,6 +362,7 @@ def get_build_directory(config, absolute = False):
     Raises:
         Nothing
     """
+    config = read_config(env)
     build_dir = DEFAULT_BUILD_DIR
     if "build_dir" in config.keys():
         build_dir = config["build_dir"]

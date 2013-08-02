@@ -1,6 +1,7 @@
 {
+  "name":"project",
   "build_dir":"build",
-  "tool_path":"/home/cospan/Projects/FX3/arm-2011.03",
+  "compiler_path":"/home/cospan/Projects/FX3/arm-2011.03",
   "img2elf_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
   "upload_tool":"/home/cospan/Projects/FX3/cyusb_linux",
   "source":[
