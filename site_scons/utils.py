@@ -54,11 +54,44 @@ def initialize_environment(env):
     Raises:
         Nothing
     """
-    #Get the configuration flag
-    #Read where the ARM Toolchain is located
-    #Read where the elf2img is located
-    #Read where the upload tool is located
+    #Get the configuration dictionary
     config = read_config(env)
+
+    #Read where the ARM Toolchain is located
+    build_path = config["tool_path"]
+    #Read where the elf2img is located
+    img2elf_path = config["img2elf_path"]
+    #Read where the upload tool is located
+    upload_tool = config["upload_tool"]
+
+    #Verify that the build tool actually cotains the correct tools
+    tool_base = ""
+    tool_prefix = ""
+    for base, dirs, files in os.walk(build_path):
+        for f in files:
+            if f.startswith("arm") and f.endswith("gcc"):
+                #print "Found: %s" % os.path.join(base, f)
+                tool_prefix = f.partition("gcc")[0]
+                tool_base = base
+                break
+
+    if not os.path.isfile(img2elf_path):
+        for base, dirs, files in os.walk(img2elf_path):
+            for f in files:
+                if f == "elf2img":
+                    img2elf_path = os.path.join(base, f)
+
+    #print "Found: %s" % img2elf_path
+
+    if not os.path.isfile(img2elf_path):
+        for base, dirs, files in os.walk(upload_tool):
+            for f in files:
+                if f == "cyusb_linux":
+                    upload_tool = os.path.join(base, f)
+
+    #print "Found: %s" % upload_tool
+
+
 
 def _resolve_paths(path_dict, file_types):
     """
@@ -156,7 +189,7 @@ def read_config(env):
 
     config = {}
     #Open the configuration file
-    fn = env["CONFIG_FILE"]
+    fn = env['CONFIG_FILE']
     if not os.path.exists(fn):
         #if the configuration file name doesn't exists then
         #maybe it is at the base directory of the project
