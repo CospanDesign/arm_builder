@@ -2,6 +2,10 @@ clean_arm_builder.sh
 
 *.py[cod]
 
+# Scons
+
+.sconsign.dblite
+
 # VIM temporary files
 *~
 *.swp
