@@ -5,9 +5,6 @@ clean_arm_builder.sh
 
 
 # Any User Source Files
-assembly/*
-include/*
-src/*
 build
 
 # Scons
