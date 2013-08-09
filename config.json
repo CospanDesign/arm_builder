@@ -2,24 +2,42 @@
   "name":"project",
   "build_dir":"build",
   "compiler_path":"/home/cospan/Projects/FX3/arm-2011.03",
-  "img2elf_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
-  "upload_tool":"/home/cospan/Projects/FX3/cyusb_linux",
+  "elf2img_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
+  "upload_tool":"/home/cospan/Projects/prometheus_comm/prometheus.py",
+  "upload_flags":"-pp",
+  "cypress_sdk_base":"/home/cospan/Projects/FX3/cyfx3sdk",
+  "linker_script":"/home/cospan/Projects/FX3/cyfx3sdk/firmware/common/fx3.ld",
+  "scatter":"/home/cospan/Projects/FX3/cyfx3sdk/firmware/common/cyfx3.scat",
+  "paths":[
+    "/home/cospan/Projects/FX3/cyfx3sdk/firmware/u3p_firmware/inc"
+  ],
   "source":[
     {
       "path":"src",
       "recursive":true
     }
   ],
-  "include":[
+  "assembly":[
     {
-      "path":"include",
+      "path":"assembly",
       "recursive":true
     }
   ],
+  "include":[
+      "/home/cospan/Projects/FX3/arm-2011.03/arm-none-eabi/include",
+      "/home/cospan/Projects/FX3/arm-2011.03/lib/gcc/arm-none-eabi/4.5.2/include",
+      "/home/cospan/Projects/FX3/arm-2011.03/lib/gcc/arm-none-eabi/4.5.2/include-fixed",
+      "/home/cospan/Projects/FX3/cyfx3sdk/firmware/u3p_firmware/inc",
+      "include"
+  ],
+  "library_paths":[
+        "libraries",
+        "/home/cospan/Projects/FX3/cyfx3sdk/firmware/u3p_firmware/lib/fx3_debug"
+  ],
   "libraries":[
-    {
-      "path":"libraries",
-      "recursive":true
-    }
+    "gcc",
+    "cyfxapi.a",
+    "cyu3lpp.a",
+    "cyu3threadx.a"
   ]
 }

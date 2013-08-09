@@ -2,7 +2,11 @@ clean_arm_builder.sh
 
 *.py[cod]
 
+
+
 # Any User Source Files
+assembly/*
+include/*
 src/*
 build
 
