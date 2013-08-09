@@ -107,5 +107,5 @@ imgfile = env.elf2img(target=utils.get_project_output_target(env), source=elf_fi
 env.vendor_reset(target="vendor_reset_img")
 env.upload(target="upload_img", source=imgfile)
 
-Default("upload_img")
+Default(imgfile)
 
