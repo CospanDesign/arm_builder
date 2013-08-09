@@ -8,6 +8,7 @@
   "cypress_sdk_base":"/home/cospan/Projects/FX3/cyfx3sdk",
   "linker_script":"/home/cospan/Projects/FX3/cyfx3sdk/firmware/common/fx3.ld",
   "scatter":"/home/cospan/Projects/FX3/cyfx3sdk/firmware/common/cyfx3.scat",
+  "target_vid_pid":"04B4:00F0",
   "paths":[
     "/home/cospan/Projects/FX3/cyfx3sdk/firmware/u3p_firmware/inc"
   ],

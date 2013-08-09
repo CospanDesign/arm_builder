@@ -96,13 +96,16 @@ if debug == True:
 #objs = c_objs.extend(cpp_objs)
 env.Tool('elf2img')
 env.Tool('upload')
+env.Tool('vendor_reset')
 
 env.Alias('upload', 'upload_img')
+env.Alias('vendor_reset', 'vendor_reset_img')
 
 elf_files = env.Program(target=utils.get_elf_target(env), source=utils.get_all_sources(env))
 imgfile = env.elf2img(target=utils.get_project_output_target(env), source=elf_files)
 
+env.vendor_reset(target="vendor_reset_img")
 env.upload(target="upload_img", source=imgfile)
 
-Default(imgfile)
+Default("upload_img")
 
