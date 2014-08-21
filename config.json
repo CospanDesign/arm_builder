@@ -5,11 +5,36 @@
   "upload_tool":"/home/cospan/Projects/FX3/cyusb_linux",
   "source":[
     {
+      "path":"bsp/boards/samd20_xplained_pro",
+      "recursive":true
+    },
+    {
+      "path":"bsp/drivers/system",
+      "recursive":true
+    },
+    {
+      "path":"bsp/utils/cmsis/samd20/source",
+      "recursive":true
+    },
+    {
       "path":"src",
       "recursive":true
     }
   ],
   "include":[
+    {
+      "path":"bsp/boards",
+      "recursive":true
+    },
+    {
+      "path":"bsp/drivers/system",
+      "recursive":true
+    },
+    {
+      "path":"bsp/utils/cmsis/samd20/include",
+      "recursive":true
+    },
+
     {
       "path":"include",
       "recursive":true
@@ -18,6 +43,12 @@
   "libraries":[
     {
       "path":"libraries",
+      "recursive":true
+    }
+  ],
+  "linker_scripts":[
+    {
+      "path":"bsp/utils/linker_scripts",
       "recursive":true
     }
   ]
