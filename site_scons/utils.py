@@ -43,29 +43,62 @@ class ConfigurationError(Exception):
         return repr(self.value)
 
 
-def initialize_environment(env):
-    """
-    Initialize the Build environment
+#def initialize_environment(env):
+#    """
+#    Initialize the Build environment
+#
+#    Args:
+#        env (Scons.Envrionment): An environment to add all the tools too
+#
+#    Returns:
+#        Nothing
+#
+#    Raises:
+#        Nothing
+#    """
+#    #Get the configuration dictionary
+#    config = read_config(env)
+#
+#    #Read where the ARM Toolchain is located
+#    build_path = config["compiler_path"]
+#    #Read where the elf2img is located
+#    img2elf_path = config["img2elf_path"]
+#    #Read where the upload tool is located
+#    upload_tool = config["upload_tool"]
+#
+#    #Verify that the build tool actually cotains the correct tools
+#    tool_base = ""
+#    tool_prefix = ""
+#    for base, dirs, files in os.walk(build_path):
+#        for f in files:
+#            if f.startswith("arm") and f.endswith("gcc"):
+#                #print "Found: %s" % os.path.join(base, f)
+#                tool_prefix = f.partition("gcc")[0]
+#                tool_base = base
+#                break
+#
+#    if not os.path.isfile(img2elf_path):
+#        for base, dirs, files in os.walk(img2elf_path):
+#            for f in files:
+#                if f == "elf2img":
+#                    img2elf_path = os.path.join(base, f)
+#
+#    #print "Found: %s" % img2elf_path
+#
+#    if not os.path.isfile(img2elf_path):
+#        for base, dirs, files in os.walk(upload_tool):
+#            for f in files:
+#                if f == "cyusb_linux":
+#                    upload_tool = os.path.join(base, f)
+#
+#    #print "Found: %s" % upload_tool
+#    #Adjust the compiler prefix
+#    compiler = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
+#    env["CC"] = compiler
 
-    Args:
-        env (Scons.Envrionment): An environment to add all the tools too
-
-    Returns:
-        Nothing
-
-    Raises:
-        Nothing
-    """
-    #Get the configuration dictionary
+def get_c_compiler_path(env):
     config = read_config(env)
-
-    #Read where the ARM Toolchain is located
-    build_path = config["tool_path"]
-    #Read where the elf2img is located
-    img2elf_path = config["img2elf_path"]
-    #Read where the upload tool is located
-    upload_tool = config["upload_tool"]
-
+    build_path = config["compiler_path"]
     #Verify that the build tool actually cotains the correct tools
     tool_base = ""
     tool_prefix = ""
@@ -77,45 +110,12 @@ def initialize_environment(env):
                 tool_base = base
                 break
 
-    if not os.path.isfile(img2elf_path):
-        for base, dirs, files in os.walk(img2elf_path):
-            for f in files:
-                if f == "elf2img":
-                    img2elf_path = os.path.join(base, f)
+    compiler_path = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
+    return compiler_path
 
-    #print "Found: %s" % img2elf_path
-
-    if not os.path.isfile(img2elf_path):
-        for base, dirs, files in os.walk(upload_tool):
-            for f in files:
-                if f == "cyusb_linux":
-                    upload_tool = os.path.join(base, f)
-
-    #print "Found: %s" % upload_tool
-    #Adjust the compiler prefix
-    compiler = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
-    env["CC"] = compiler
-
-def get_c_tool_path(env):
+def get_cxx_compiler_path(env):
     config = read_config(env)
-    build_path = config["tool_path"]
-    #Verify that the build tool actually cotains the correct tools
-    tool_base = ""
-    tool_prefix = ""
-    for base, dirs, files in os.walk(build_path):
-        for f in files:
-            if f.startswith("arm") and f.endswith("gcc"):
-                #print "Found: %s" % os.path.join(base, f)
-                tool_prefix = f.partition("gcc")[0]
-                tool_base = base
-                break
-
-    tool_path = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
-    return tool_path
-
-def get_cxx_tool_path(env):
-    config = read_config(env)
-    build_path = config["tool_path"]
+    build_path = config["compiler_path"]
     #Verify that the build tool actually cotains the correct tools
     tool_base = ""
     tool_prefix = ""
@@ -127,14 +127,14 @@ def get_cxx_tool_path(env):
                 tool_base = base
                 break
 
-    tool_path = os.path.join(tool_base, "%s%s" % (tool_prefix, "g++"))
-    return tool_path
+    compiler_path = os.path.join(tool_base, "%s%s" % (tool_prefix, "g++"))
+    return compiler_path
 
 
 def get_compiler_version(env):
     print "get compiler version"
-    tool_path = get_c_tool_path(env)
-    version = subprocess.check_output([tool_path, "-dumpversion"]).strip()
+    compiler_path = get_c_compiler_path(env)
+    version = subprocess.check_output([compiler_path, "-dumpversion"]).strip()
     return version
 
 def get_include_paths(env):
