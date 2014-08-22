@@ -362,6 +362,7 @@ def read_config(env):
     #                      DEFAULT_CONFIG_FILE)
     try:
         config = json.load(open(fn, "r"))
+
     except TypeError as err:
         raise ConfigurationError(
                 "Error parsing json file: %s" % str(err))

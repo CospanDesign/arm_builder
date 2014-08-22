@@ -1,55 +1,65 @@
 {
+  "name":"project",
   "build_dir":"build",
-  "tool_path":"/home/cospan/Projects/FX3/arm-2011.03",
-  "img2elf_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
-  "upload_tool":"/home/cospan/Projects/FX3/cyusb_linux",
+  "compiler_path":"/usr/bin",
+  "elf2img_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
+  "upload_tool":"/home/cospan/Projects/prometheus_comm/prometheus.py",
+  "upload_flags":"-pp",
+  "linker_script":"bsp/utils/linker_scripts/samd20/gcc/samd20j18_flash.ld",
+
+  "paths":[
+    "/home/cospan"
+  ],
+  "assembly":[
+    {
+      "path":"assembly",
+      "recursive":true
+    }
+  ],
   "source":[
     {
       "path":"bsp/boards/samd20_xplained_pro",
       "recursive":true
     },
     {
-      "path":"bsp/drivers/system",
-      "recursive":true
-    },
-    {
-      "path":"bsp/utils/cmsis/samd20/source",
+      "path":"bsp/utils",
       "recursive":true
     },
     {
       "path":"src",
       "recursive":true
+    },
+    {
+      "path":"bsp/drivers",
+      "recursive":true
     }
+
   ],
   "include":[
-    {
-      "path":"bsp/boards",
-      "recursive":true
-    },
-    {
-      "path":"bsp/drivers/system",
-      "recursive":true
-    },
-    {
-      "path":"bsp/utils/cmsis/samd20/include",
-      "recursive":true
-    },
-
-    {
-      "path":"include",
-      "recursive":true
-    }
+    "bsp/drivers/extint",
+    "config",
+    "bsp/drivers/system",
+    "bsp/drivers/port",
+    "bsp/utils",
+    "bsp/utils/preprocessor",
+    "bsp/utils/header_files",
+    "bsp/utils/cmsis/samd20/source",
+    "bsp/utils/stdio",
+    "bsp/boards/samd20_xplained_pro",
+    "bsp/boards",
+    "bsp/drivers/system/pinmux",
+    "bsp/drivers/system/clock",
+    "bsp/drivers/system/interrupt",
+    "bsp/drivers/system/interrupt/system_interrupt_samd20",
+    "bsp/utils/cmsis/samd20/include",
+    "include",
+    "/usr/lib/arm-none-eabi/include"
+  ],
+  "library_paths":[
+    "libraries",
+    "/usr/lib/arm-none-eabi/lib"
   ],
   "libraries":[
-    {
-      "path":"libraries",
-      "recursive":true
-    }
-  ],
-  "linker_scripts":[
-    {
-      "path":"bsp/utils/linker_scripts",
-      "recursive":true
-    }
+    "gcc"
   ]
 }
