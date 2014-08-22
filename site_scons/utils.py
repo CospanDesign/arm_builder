@@ -132,7 +132,7 @@ def get_cxx_compiler_path(env):
 
 
 def get_compiler_version(env):
-    print "get compiler version"
+    #print "get compiler version"
     compiler_path = get_c_compiler_path(env)
     version = subprocess.check_output([compiler_path, "-dumpversion"]).strip()
     return version

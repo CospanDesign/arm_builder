@@ -27,7 +27,15 @@
   ],
   "include":[
     "include",
-    "/usr/lib/arm-none-eabi/include"
+    "/usr/lib/arm-none-eabi/include",
+    "./bsp/utils",
+    "./bsp/utils/cmsis/samd20/include",
+    "./bsp/utils/cmsis/samd20/include/insance",
+    "./bsp/utils/cmsis/samd20/include/pio",
+    "./bsp/utils/cmsis/samd20/include/component",
+    "./bsp/utils/cmsis/samd20/source",
+    "./bsp/utils/interrupt",
+    "./bsp/utils/preprocessor"
   ],
   "library_paths":[
     "libraries",

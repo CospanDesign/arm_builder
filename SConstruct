@@ -42,7 +42,7 @@ env.Append(CPPPATH = utils.get_include_paths(env))
 #All Flags
 env.Append(CCFLAGS="-mcpu=cortex-m0plus")
 env.Append(CCFLAGS="-mthumb")
-env.Append(CCFLAGS="-D__SAMD20J18__")
+env.Append(CCFLAGS="-D__SAMD20G18__")
 env.Append(CCFLAGS="-Wall")
 env.Append(CCFLAGS="-std=c99")
 
