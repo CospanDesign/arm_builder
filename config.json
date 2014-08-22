@@ -2,10 +2,9 @@
   "name":"project",
   "build_dir":"build",
   "compiler_path":"/usr/bin",
-  "elf2img_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
   "upload_tool":"/home/cospan/Projects/prometheus_comm/prometheus.py",
   "upload_flags":"-pp",
-  "linker_script":"bsp/utils/linker_scripts/samd20/gcc/samd20j18_flash.ld",
+  "linker_script":"arch/samd20g18.ld",
 
   "paths":[
     "/home/cospan"
@@ -18,40 +17,15 @@
   ],
   "source":[
     {
-      "path":"bsp/boards/samd20_xplained_pro",
-      "recursive":true
-    },
-    {
-      "path":"bsp/utils",
+      "path":"bsp",
       "recursive":true
     },
     {
       "path":"src",
       "recursive":true
-    },
-    {
-      "path":"bsp/drivers",
-      "recursive":true
     }
-
   ],
   "include":[
-    "bsp/drivers/extint",
-    "config",
-    "bsp/drivers/system",
-    "bsp/drivers/port",
-    "bsp/utils",
-    "bsp/utils/preprocessor",
-    "bsp/utils/header_files",
-    "bsp/utils/cmsis/samd20/source",
-    "bsp/utils/stdio",
-    "bsp/boards/samd20_xplained_pro",
-    "bsp/boards",
-    "bsp/drivers/system/pinmux",
-    "bsp/drivers/system/clock",
-    "bsp/drivers/system/interrupt",
-    "bsp/drivers/system/interrupt/system_interrupt_samd20",
-    "bsp/utils/cmsis/samd20/include",
     "include",
     "/usr/lib/arm-none-eabi/include"
   ],

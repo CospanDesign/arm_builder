@@ -38,7 +38,8 @@ def find_elf2img(env):
         Nothing
     """
     config = utils.read_config(env)
-    i2e_path = os.path.join(config["elf2img_path"], "elf2img")
+    try:
+        i2e_path = os.path.join(config["elf2img_path"], "elf2img")
     return i2e_path
 
 def get_elf2img_outfile(env):

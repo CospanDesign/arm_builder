@@ -43,14 +43,8 @@ env.Append(CPPPATH = utils.get_include_paths(env))
 env.Append(CCFLAGS="-mcpu=cortex-m0plus")
 env.Append(CCFLAGS="-mthumb")
 env.Append(CCFLAGS="-D__SAMD20J18__")
-env.Append(CCFLAGS="-DBOARD=SAMD20_XPLAINED_PRO")
-env.Append(CCFLAGS="-DARM_MATH_CM0=true")
 env.Append(CCFLAGS="-Wall")
-#env.Append(CCFLAGS="-Wl")
-#env.Append(CCFLAGS="--gc-sections")
 env.Append(CCFLAGS="-std=c99")
-env.Append(CCFLAGS="-DEXTINT_CALLBACK_MODE=true")
-env.Append(CCFLAGS="-fdata-sections -ffunction-sections")
 
 #C Specific flags
 
@@ -70,9 +64,8 @@ env.Append(LIBPATH = utils.get_library_paths(env))
 env.Append(LIBS = utils.get_libraries(env))
 
 env.Append(LINKFLAGS="-T%s" % utils.get_linker_script(env))
-env.Append(LINKFLAGS="--entry=Reset_Handler")
-#env.Append(LINKFLAGS="--cref")
-env.Append(LINKFLAGS="-mthumb")
+#env.Append(LINKFLAGS="--entry=Reset_Handler")
+#env.Append(LINKFLAGS="-mthumb")
 
 
 env.Replace(LIBPREFIXES = "")
@@ -96,11 +89,11 @@ if debug == True:
 
 
 #objs = c_objs.extend(cpp_objs)
-env.Tool('elf2img')
-env.Tool('upload')
+#env.Tool('elf2img')
+#env.Tool('upload')
 #env.Tool('vendor_reset')
 
-env.Alias('upload', 'upload_img')
+#env.Alias('upload', 'upload_img')
 #env.Alias('vendor_reset', 'vendor_reset_img')
 
 elf_files = env.Program(target=utils.get_elf_target(env), source=utils.get_all_sources(env))
