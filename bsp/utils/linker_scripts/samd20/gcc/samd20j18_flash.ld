@@ -134,12 +134,12 @@ SECTIONS
     .bss (NOLOAD) :
     {
         . = ALIGN(4);
-        _sbss = . ;
+        __bss_start__ = . ;
         _szero = .;
         *(.bss .bss.*)
         *(COMMON)
         . = ALIGN(4);
-        _ebss = . ;
+        __bss_end__ = . ;
         _ezero = .;
     } > ram
 
