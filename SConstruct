@@ -36,15 +36,21 @@ env.Replace(CXXFILESUFFIX = "cpp")
 env.Append(CPPPATH = utils.get_include_paths(env))
 #env.AppendENVPath('PATH', utils.get_paths(env))
 
-#env.Append(CPPDEFINES ="")
+env.Append(CPPDEFINES ="__SAMD20G18__")
+env.Append(CPPDEFINES="USART_CALLBACK_MODE=true")
+env.Append(CPPDEFINES="BOARD=USER_BOARD")
 
 
 #All Flags
 env.Append(CCFLAGS="-mcpu=cortex-m0plus")
 env.Append(CCFLAGS="-mthumb")
-env.Append(CCFLAGS="-D__SAMD20G18__")
 env.Append(CCFLAGS="-Wall")
 env.Append(CCFLAGS="-std=c99")
+
+#Defines
+#env.Append(CCFLAGS="-D__SAMD20G18__")
+#env.Append(CCFLAGS="-DUSART_CALLBACK_MODE=true")
+
 
 #C Specific flags
 

@@ -17,6 +17,10 @@
   ],
   "source":[
     {
+      "path":"freertos",
+      "recursive":true
+    },
+    {
       "path":"bsp",
       "recursive":true
     },
@@ -28,6 +32,7 @@
   "include":[
     "include",
     "/usr/lib/arm-none-eabi/include",
+    "./bsp",
     "./bsp/utils",
     "./bsp/utils/cmsis/samd20/include",
     "./bsp/utils/cmsis/samd20/include/insance",
@@ -35,7 +40,26 @@
     "./bsp/utils/cmsis/samd20/include/component",
     "./bsp/utils/cmsis/samd20/source",
     "./bsp/utils/interrupt",
-    "./bsp/utils/preprocessor"
+    "./bsp/utils/preprocessor",
+
+    "./config",
+
+    "./bsp/utils/cmsis/samd20/include/component",
+    "./bsp/driver/sercom",
+    "./bsp/driver/sercom/usart",
+    "./bsp/driver/port",
+    "./bsp/driver/system",
+    "./bsp/driver/system/clock",
+    "./bsp/driver/system/clock/quick_start_clock",
+    "./bsp/driver/system/clock/quick_start_clock",
+    "./bsp/driver/system/clock/clock_samd20",
+    "./bsp/driver/system/pinmux",
+    "./bsp/driver/system/interrupt",
+    "./bsp/driver/system/interrupt/system_interrupt_samd20",
+
+    "./freertos",
+    "./freertos/freertos-7.4.2/Source/portable/GCC/ARM_CM0",
+    "./freertos/freertos-7.4.2/Source/include"
   ],
   "library_paths":[
     "libraries",

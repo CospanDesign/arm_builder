@@ -2,6 +2,7 @@ clean_arm_builder.sh
 
 *.py[cod]
 *.pyc
+build
 
 # Scons
 
