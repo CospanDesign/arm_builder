@@ -1,24 +1,49 @@
 {
+  "name":"project",
   "build_dir":"build",
-  "tool_path":"/home/cospan/Projects/FX3/arm-2011.03",
-  "img2elf_path":"/home/cospan/Projects/FX3/cyfx3sdk/util/elf2img",
-  "upload_tool":"/home/cospan/Projects/FX3/cyusb_linux",
+  "cflags":[
+    "-mcpu=cortex-m0plus",
+    "-mthumb"
+  ],
+  "cppflags":[
+  ],
+  "compiler_path":"/usr/bin",
+  "upload_tool":"",
+  "upload_flags":"",
+  "linker_script":"/usr/lib/arm-none-eabi/ldscripts/armelf.x",
+
+  "paths":[
+    "arch"
+  ],
+  "assembly":[
+    {
+      "path":"assembly",
+      "recursive":true
+    }
+  ],
   "source":[
     {
       "path":"src",
       "recursive":true
+    },
+    {
+      "path":"./bsp",
+      "recursive":true
     }
+
   ],
   "include":[
-    {
-      "path":"include",
-      "recursive":true
-    }
+    "include",
+    "/usr/lib/arm-none-eabi/include",
+    "./bsp/utils",
+    "./bsp/utils/preprocessor",
+    "./bsp/utils/interrupt",
+    "./bsp/utils/stdio/stdio_serial"
+  ],
+  "library_paths":[
+    "libraries",
+    "/usr/lib/arm-none-eabi/lib/armv6-m"
   ],
   "libraries":[
-    {
-      "path":"libraries",
-      "recursive":true
-    }
   ]
 }

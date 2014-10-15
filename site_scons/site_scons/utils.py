@@ -96,16 +96,6 @@ class ConfigurationError(Exception):
 #    compiler = os.path.join(tool_base, "%s%s" % (tool_prefix, "gcc"))
 #    env["CC"] = compiler
 
-def get_c_flags(env):
-    config = read_config(env)
-    cflags = config["cflags"]
-    return cflags
-
-def get_cpp_flags(env):
-    config = read_config(env)
-    cppflags = config["cppflags"]
-    return cppflags
-
 def get_c_compiler_path(env):
     config = read_config(env)
     build_path = config["compiler_path"]
